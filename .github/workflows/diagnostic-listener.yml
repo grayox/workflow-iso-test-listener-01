@@ -1,0 +1,32 @@
+# ===================================================================================
+# ==                            DIAGNOSTIC WORKFLOW                                ==
+# ==                                                                               ==
+# == PURPOSE:                                                                      ==
+# == This workflow is NOT part of the application's core logic. It is a            ==
+# == minimal, stable diagnostic tool designed to test the fundamental behavior     ==
+# == of GitHub Actions event triggers (e.g., `workflow_run`).                      ==
+# ==                                                                               ==
+# == DO NOT REMOVE:                                                                ==
+# == This file should be kept in the repository as a baseline for troubleshooting  ==
+# == potential issues with the GitHub platform's event delivery system.            ==
+# ===================================================================================
+
+name: 🟢 Diagnostic Listener (Cross-Repo)
+
+on:
+  workflow_run:
+    # Listening for the specific source workflow by its name from any repo
+    workflows: ["🔴 Diagnostic Signal (Failing Workflow)"]
+    types:
+      - completed
+
+jobs:
+  log_the_trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log the event that triggered this workflow
+        run: |
+          echo "✅ SUCCESS: The CROSS-REPO listener workflow was triggered!"
+          echo "Source Repository: ${{ github.event.workflow_run.head_repository.full_name }}"
+          echo "Source Workflow Name: ${{ github.event.workflow_run.name }}"
+          echo "Source Conclusion: ${{ github.event.workflow_run.conclusion }}"
