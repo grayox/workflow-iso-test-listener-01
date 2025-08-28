@@ -1,6 +1,5 @@
- ===================================================================================
- ==                            DEPRECATION NOTICE                                 ==
- ===================================================================================
+DEPRECATION NOTICE
+==================
 
 This workflow (or trigger configuration) represents an attempt to use GitHub's
 native `workflow_run` event for cross-repository communication to trigger a
@@ -15,12 +14,14 @@ Our extensive diagnostics, including pure isolation tests (e.g., using
     being correctly configured (API-verified). The event simply does not arrive.
 
 DECISION TO DEPRECATE:
+
 Due to the proven unreliability of cross-repository `workflow_run` event delivery
 to GitHub Apps, this approach has been deprecated. We have pivoted to an
 **API-driven (repository_dispatch) model** where client repositories explicitly
 notify the `debug-01` App of failures.
 
 INSTITUTIONAL KNOWLEDGE GAINED:
+
 -   Do NOT rely on cross-repository `workflow_run` triggers for GitHub Apps
     when designing mission-critical event delivery mechanisms.
 -   Instead, opt for an explicit `repository_dispatch` API call from the source
@@ -30,5 +31,3 @@ INSTITUTIONAL KNOWLEDGE GAINED:
 
 This file is retained for historical diagnostic context. Do not use this trigger
 configuration for active development.
-
- ===================================================================================
